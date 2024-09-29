@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content=" Luxurious cabin hotel, located in the heart of the Italian Dolomites, surrounded by beautiful mountains and dark forests" />
+    <title>@ViewData["Title"] / The Wild Oasis</title>
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
+    @* <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /> *@
+    @* <link rel="stylesheet" href="~/TheWildOasis.styles.css" asp-append-version="true" /> *@
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+</head>
+
+<body class="antialiased bg-primary-950 text-primary-100 min-h-screen flex flex-col relative">
+
+    <header class="border-b border-primary-900 px-8 py-5">
+        <div class="flex justify-between items-center max-w-7xl mx-auto">
+            <a asp-area="" asp-page="/Index" class="flex items-center gap-4 z-10">
+                <img src="~/logo.png" height="60" width="60" alt="The Wild Oasis logo" />
+                <span class="text-xl font-semibold text-primary-100">
+                    The Wild Oasis
+                </span>
+            </a>
+            <nav class="z-10 text-xl">
+                <ul class="flex gap-16 items-center">
+                    <li>
+                        <a asp-area="" asp-page="/cabins/index" class="hover:text-accent-400 transition-colors">
+                            Cabins
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-page="/about" class="hover:text-accent-400 transition-colors">
+                            About
+                        </a>
+                    </li>
+                    @* <li>
+                    <a asp-area="" asp-page="/account"
+                    class="hover:text-accent-400 transition-colors flex gap-2.5 items-center">
+                    {session?.user ? (
+                    <img class="h-8 rounded-full" src={session.user.image} referrerPolicy="no-referrer"
+                    alt={session.user.name + " image" } />
+                    ) : null}
+                    Guest area
+                    </a>
+                    </li> *@
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <div class="flex-1 px-8 py-12 grid">
+        <main class="max-w-7xl mx-auto w-full">
+            @RenderBody()
+        </main>
+    </div>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @* <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

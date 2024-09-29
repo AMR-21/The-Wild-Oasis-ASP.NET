@@ -1,0 +1,103 @@
+@page
+@model TheWildOasis.Pages.Cabins.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div>
+    <h1 class="text-4xl mb-5 text-accent-400 font-medium">
+        Our Luxury Cabins
+    </h1>
+    <p class="text-primary-200 text-lg mb-10">
+        Cozy yet luxurious cabins, located right in the heart of the Italian
+        Dolomites. Imagine waking up to beautiful mountain views, spending your
+        days exploring the dark forests around, or just relaxing in your private
+        hot tub under the stars. Enjoy nature&apos;s beauty in your own little
+        home away from home. The perfect spot for a peaceful, calm vacation.
+        using System.Diagnostics;
+        Welcome to paradise.
+    </p>
+
+    <div class="flex justify-end mb-8">
+        <div class="border border-primary-800 flex">
+            @foreach (var filter in Model.filters)
+            {
+                <a asp-page="./Index" asp-route-capacity="@filter">
+                    <button
+                        class="px-5 py-2 hover:bg-primary-700 @(filter == (Model.Capacity?.ToLower()??"all") ? "bg-primary-700 text-primary-50" : "")">
+                        @switch (filter)
+                        {
+                            case "all":
+                                <span>All cabins</span>
+                                break;
+                            case "small":
+                                <span>2&mdash;3 guests</span>
+                                break;
+                            case "medium":
+                                <span>4&mdash;7 guests</span>
+                                break;
+                            default:
+                                <span>8&mdash;12 guests</span>
+                                break;
+                        }
+                    </button>
+                </a>
+            }
+        </div>
+    </div>
+
+
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-14">
+        @foreach (var cabin in Model.Cabins)
+        {
+            <div class="flex border-primary-800 border">
+                <div class="flex-1 relative">
+                    <img src="@Html.DisplayFor(_=>cabin.Image)" alt={`Cabin ${name}`}
+                        class="border-r object-cover border-primary-800 absolute inset-0 h-full w-full" />
+                </div>
+
+                <div class="flex-grow">
+                    <div class="pt-5 pb-4 px-7 bg-primary-950">
+                        <h3 class="text-accent-500 font-semibold text-2xl mb-3">
+                            Cabin @Html.DisplayFor(_ => cabin.Name)
+                        </h3>
+
+                        <div class="flex gap-3 items-center mb-2">
+                            @* <UsersIcon class="h-5 w-5 text-primary-600" /> *@
+                            <p class="text-lg text-primary-200">
+                                For up to <span class="font-bold">@Html.DisplayFor(_ => cabin.MaxCapacity)</span> guests
+                            </p>
+                        </div>
+
+                        <p class="flex gap-3 justify-end items-baseline">
+                            @{
+                                if (cabin.Discount > 0)
+                                {
+                                    <span class="text-3xl font-[350]">
+                                        $@(cabin.RegularPrice - cabin.Discount)
+                                    </span>
+                                    <span class="line-through font-semibold text-primary-600">
+                                        $@Html.DisplayFor(_ => cabin.RegularPrice)
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-3xl font-[350]">$@Html.DisplayFor(_ => cabin.RegularPrice)</span>
+                                }
+                            }
+
+                            <span class="text-primary-200">/ night</span>
+                        </p>
+                    </div>
+
+                    <div class="bg-primary-950 border-t border-t-primary-800 text-right">
+                        <a asp-page="./cabin" asp-route-id="@cabin.Id"
+                            class="border-l border-primary-800 py-4 px-6 inline-block hover:bg-accent-600 transition-all hover:text-primary-900">
+                            Details & reservation &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
