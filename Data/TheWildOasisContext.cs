@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace TheWildOasis.Data
 {
-  public class TheWildOasisContext : DbContext
+  public class TheWildOasisContext : IdentityDbContext<IdentityUser>
   {
     public TheWildOasisContext(DbContextOptions<TheWildOasisContext> options)
       : base(options)

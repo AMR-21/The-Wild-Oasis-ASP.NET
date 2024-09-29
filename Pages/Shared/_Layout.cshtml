@@ -39,16 +39,13 @@
                             About
                         </a>
                     </li>
-                    @* <li>
-                    <a asp-area="" asp-page="/account"
-                    class="hover:text-accent-400 transition-colors flex gap-2.5 items-center">
-                    {session?.user ? (
-                    <img class="h-8 rounded-full" src={session.user.image} referrerPolicy="no-referrer"
-                    alt={session.user.name + " image" } />
-                    ) : null}
-                    Guest area
-                    </a>
-                    </li> *@
+
+                    <li>
+                        <a asp-area="" asp-page="/account/index"
+                            class="hover:text-accent-400 transition-colors flex gap-2.5 items-center">
+                            Guest area
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>

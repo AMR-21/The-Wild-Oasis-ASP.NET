@@ -1,0 +1,33 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="flex flex-col gap-10 h-full mt-10 items-center">
+    <h2 class="text-3xl font-semibold">
+        Sign in to access your guest area
+    </h2>
+    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+        <button type="submit" name="provider"
+            class="flex items-center gap-6 text-lg border border-primary-300 px-10 py-4 font-medium"
+            value="@Model.ExternalLogins[0].Name">
+            <img src="https://authjs.dev/img/providers/google.svg" alt="Google logo" height="24" width="24" />
+            <span>Continue with Google</span>
+        </button>
+    </form>
+
+    @* <p>
+    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+    </p> *@
+</div>
+
+
+
+
+
+
+@* @section Scripts {
+<partial name="_ValidationScriptsPartial" />
+} *@

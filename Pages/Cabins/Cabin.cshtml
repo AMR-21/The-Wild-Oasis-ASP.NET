@@ -1,5 +1,9 @@
 @page "{id:int}"
+
+@using Microsoft.AspNetCore.Identity
 @model TheWildOasis.Pages.Cabins.CabinModel
+@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<IdentityUser> SignInManager
 
 @{
     ViewData["Title"] = "Cabin " + Model.Cabin.Name;
@@ -67,11 +71,53 @@
         </div>
     </div>
 
-    @* <div>
-    <h2 class="text-5xl font-semibold text-center text-accent-400 mb-10">
-    Reserve @Html.DisplayFor(model => model.Cabin.Name) today. Pay on arrival.
-    </h2>
-    </div> *@
+    <div>
+        <h2 class="text-5xl font-semibold text-center text-accent-400 mb-10">
+            Reserve @Html.DisplayFor(model => model.Cabin.Name) today. Pay on arrival.
+        </h2>
+    </div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="scale-[1.01]">
+            <div class="bg-primary-800 text-primary-300 px-16 py-2 flex justify-between items-center">
+                <p>Logged in as</p>
+
+                <div class="flex gap-4 items-center">
+                    <p>@(User?.Identity?.Name ?? "Guest") </p>
+                </div>
+            </div>
+
+            <form class="bg-primary-900 py-10 px-16 text-lg flex gap-5 flex-col">
 
 
+                <div class="space-y-2">
+                    <label htmlFor="numGuests">How many guests?</label>
+                    <select name="numGuests" id="numGuests"
+                        class="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm" required>
+                        <option value="" key="">
+                            Select number of guests...
+                        </option>
+                        @for (int i = 1; i <= Model.Cabin.MaxCapacity; i++)
+                        {
+                            <option value="@i" key="@i">
+                                @i @(i == 1 ? "guest" : "guests")
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="space-y-2">
+                    <label htmlFor="observations">
+                        Anything we should know about your stay?
+                    </label>
+                    <textarea name="observations" id="observations"
+                        class="px-5 py-3 bg-primary-200 text-primary-800 w-full shadow-sm rounded-sm"
+                        placeholder="Any pets, allergies, special requirements, etc.?" />
+                </div>
+
+
+            </form>
+        </div>
+
+    }
 </div>

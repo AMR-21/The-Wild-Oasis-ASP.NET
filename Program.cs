@@ -1,17 +1,37 @@
 using Microsoft.EntityFrameworkCore;
 using TheWildOasis.Data;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorPages();
+var configuration = builder.Configuration;
 
-var connectionString = builder.Configuration["DB"];
+// Add services to the container.
+
+builder.Services.AddRazorPages();
 
 builder.Services.AddDbContext<TheWildOasisContext>(options =>
 {
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseMySql(configuration["DB"], ServerVersion.AutoDetect(configuration["DB"]));
 });
+
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<TheWildOasisContext>();
+
+
+builder.Services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = configuration["Authentication:Google:ClientId"]!;
+    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"]!;
+
+    // Request additional scopes to get user profile information
+    googleOptions.Scope.Add("profile");
+    googleOptions.Scope.Add("email");
+
+});
+
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -23,6 +43,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -31,5 +53,6 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+app.MapControllers();
 
 app.Run();
